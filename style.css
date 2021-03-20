@@ -1,0 +1,92 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-family: sans-serif;
+}
+
+table {
+  margin: 0 auto;
+  width: 400px;
+  border-collapse: collapse;
+}
+
+table tr.date-tr td {
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+td {
+  height: 35px;
+  padding: 5px 8px;
+  width: 50%;
+}
+
+table, tr, td {
+  box-sizing: border-box;
+  border: 1px solid #dfe1e5;
+  border-radius: 3px;
+}
+
+table tr.item-total-tr td {
+  border-top: 1px solid #9e9e9e;
+}
+
+table td.cancel {
+  padding-top: 8px;
+  display: none;
+  position: absolute;
+  width: 100px;
+  border: none;
+  background-color: #e53935;
+  color: white;
+  text-align: center;
+  user-select: none;
+}
+
+table tr:hover td.cancel, table td.cancel:hover {
+  display: block;
+}
+
+table td.cancel:hover {
+  cursor: pointer;
+}
+
+#control {
+  width: 400px;
+  height: 125px;
+  margin: 50px auto;
+}
+
+#control input {
+  width: 195px;
+  height: 35px;
+  border: 1px solid #dfe1e5;
+  outline: none;
+  padding: 5px 8px;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
+#control input:nth-of-type(2) {
+  margin-right: 5px;
+}
+
+#control input[type="date"] {
+  width: 400px;
+  margin-bottom: 10px;
+}
+
+#control input[type="submit"] {
+  width: 400px;
+  height: 35px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: #1a73e8;
+  color: white;
+  padding-top: 8px;
+  text-align: center;
+  user-select: none;
+}
