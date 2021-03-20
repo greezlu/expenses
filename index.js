@@ -1,22 +1,22 @@
-class Expence {
+class Expense {
 
-  table = document.getElementById("expences");
+  table = document.getElementById("expenses");
   form = document.forms.control;
 
   clearLocalStorage () {
-    localStorage.removeItem("expences");
+    localStorage.removeItem("expenses");
     this.calculate();
   }
 
-  setLocalStorage (currentExpences) {
-    currentExpences = JSON.stringify(currentExpences);
-    localStorage.setItem("expences", currentExpences);
+  setLocalStorage (currentExpenses) {
+    currentExpenses = JSON.stringify(currentExpenses);
+    localStorage.setItem("expenses", currentExpenses);
   }
 
   getLocalStorage () {
-    let currentExpences = localStorage.getItem("expences");
-    currentExpences = JSON.parse(currentExpences);
-    return currentExpences;
+    let currentExpenses = localStorage.getItem("expenses");
+    currentExpenses = JSON.parse(currentExpenses);
+    return currentExpenses;
   }
 
   calculate () {
@@ -38,19 +38,19 @@ class Expence {
 
     function rebuildTbody (self) {
 
-      let currentExpences = self.getLocalStorage();
+      let currentExpenses = self.getLocalStorage();
       let tBody = self.table.getElementsByTagName("tbody")[0];
       let tFoot = self.table.getElementsByTagName("tfoot")[0];
       let totalValue = 0;
 
-      for (let date in currentExpences) {
+      Object.keys(currentExpenses).sort().forEach((date) => {
 
         let trDate = createTrDate(date);
         tBody.append(trDate);
 
         let dayValue = 0;
 
-        for (let item of currentExpences[date]) {
+        for (let item of currentExpenses[date]) {
           dayValue += Number(item["item-value"]);
           let rItem = createTrItem(item["item-name"], item["item-value"]);
           tBody.append(rItem);
@@ -61,7 +61,7 @@ class Expence {
         let trItemTotal = createTrItemTotal(dayValue);
         tBody.append(trItemTotal);
 
-      }
+      });
 
       if (totalValue > 0) {
         let trTotal = createTrTotal(totalValue);
@@ -168,22 +168,22 @@ class Expence {
 
       event.preventDefault();
 
-      let currentExpences = self.getLocalStorage() ?? new Object();
+      let currentExpenses = self.getLocalStorage() ?? new Object();
 
       let date = getAndRemoveFromForm("date");
       let name = getAndRemoveFromForm("name");
       let value = getAndRemoveFromForm("value");
 
-      if ( !Array.isArray(currentExpences[date]) ) {
-        currentExpences[date] = new Array();
+      if ( !Array.isArray(currentExpenses[date]) ) {
+        currentExpenses[date] = new Array();
       }
 
-      currentExpences[date].push({
+      currentExpenses[date].push({
         "item-name": name,
         "item-value": value,
       });
 
-      self.setLocalStorage(currentExpences);
+      self.setLocalStorage(currentExpenses);
 
       self.calculate();
 
@@ -194,7 +194,7 @@ class Expence {
       let currentElemText;
       if (currentElem) {
         currentElemText = currentElem.value;
-        currentElem.value = "";//TODO ?.
+        currentElem.value = "";
       }
       return currentElemText;
     }
@@ -221,8 +221,8 @@ class Expence {
         let currentItemName = item.getElementsByClassName("item-name")[0].innerText;
         let currentItemValue = item.getElementsByClassName("item-value")[0].innerText;
 
-        let currentExpences = self.getLocalStorage();
-        let currentExpeceItem = currentExpences[currentDate];
+        let currentExpenses = self.getLocalStorage();
+        let currentExpeceItem = currentExpenses[currentDate];
 
         let i = currentExpeceItem?.findIndex(item=>{
           if (item["item-name"] === currentItemName &&
@@ -230,9 +230,9 @@ class Expence {
         });
 
         if (isFinite(i)) currentExpeceItem.splice(i, 1);
-        if (!currentExpeceItem.length) delete currentExpences[currentDate];
+        if (!currentExpeceItem.length) delete currentExpenses[currentDate];
 
-        self.setLocalStorage(currentExpences);
+        self.setLocalStorage(currentExpenses);
 
         function getParsedDate (str) {
           let date = str.split(".");
@@ -248,7 +248,7 @@ class Expence {
 
 }
 
-let expenceTable = new Expence();
-console.log(expenceTable);
-console.log("To view local storage:\nexpenceTable.getLocalStorage()");
-console.log("To clear local storage:\nexpenceTable.clearLocalStorage()");
+let expenseTable = new Expense();
+console.log(expenseTable);
+console.log("To view local storage:\nexpenseTable.getLocalStorage()");
+console.log("To clear local storage:\nexpenseTable.clearLocalStorage()");
